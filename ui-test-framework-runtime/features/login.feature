@@ -5,11 +5,7 @@ Feature: Login
   credentials
   So that I reach the dashboard
 
-  # Scenarios are ordered on purpose and share ONE browser session (see
-  # features/steps/fixtures.ts — every scenario in the whole BDD suite runs
-  # against the same worker-scoped page, not a fresh one per scenario).
-  # Failure cases run first; the ONLY successful login happens last, here,
-  # and search.feature continues from the session this leaves behind.
+
 
   Scenario: Submitting an empty login form is rejected
     Given I am on the login page

@@ -1,20 +1,25 @@
 {
   "compilerOptions": {
     "target": "ES2021",
-    "module": "commonjs",
+    "module": "nodenext",
     "lib": ["ES2021", "DOM"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "baseUrl": ".",
     "paths": {
-      "@framework/*": ["framework/*"],
-      "@tests/*": ["tests/*"]
+      "@helpers/*": ["helpers/*"]
     }
   },
-  "include": ["framework/**/*.ts", "tests/**/*.ts", "features/**/*.ts", "playwright.config.ts", "playwright.config.bdd.ts"],
+  "include": [
+    "helpers/**/*.ts",
+    "features/**/*.feature",
+    "features/**/*.ts",
+    "step-definitions/**/*.ts",
+    "playwright.config.ts"
+  ],
   "exclude": ["node_modules", "playwright-report", "test-results"]
 }

@@ -1,10 +1,12 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { logger } from '../utils/logger';
+import { loginPageLocators as locators } from '../locators/LoginPage.locators';
 
 /**
  * Page object for the OrangeHRM demo login page.
- * Selectors target the OrangeHRM (opensource-demo.orangehrmlive.com) OXD UI.
+ * Selectors live in helpers/locators/LoginPage.locators.ts — this class
+ * only holds behavior (what to click/fill/assert), not raw strings.
  *
  * If you point this framework at a different demo (e.g.
  * the-internet.herokuapp.com/login), create a sibling page object
@@ -19,11 +21,10 @@ export class LoginPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.usernameInput = page.locator('input[name="username"]');
-    this.passwordInput = page.locator('input[name="password"]');
-    this.loginButton = page.locator('button[type="submit"]');
-    // OrangeHRM renders invalid-credential errors in an alert banner.
-    this.errorMessage = page.locator('.oxd-alert-content-text');
+    this.usernameInput = page.locator(locators.usernameInput);
+    this.passwordInput = page.locator(locators.passwordInput);
+    this.loginButton = page.locator(locators.loginButton);
+    this.errorMessage = page.locator(locators.errorMessage);
   }
 
   async open(): Promise<void> {

@@ -1,14 +1,14 @@
 import { test as base } from 'playwright-bdd';
 import { Page } from '@playwright/test';
-import { LoginPage } from '../../framework/pages/LoginPage';
-import { DashboardPage } from '../../framework/pages/DashboardPage';
+import { LoginPage } from '../helpers/pages/LoginPage';
+import { DashboardPage } from '../helpers/pages/DashboardPage';
 
 /**
  * Extends playwright-bdd's base test with the SAME page objects the
  * plain (non-BDD) specs in tests/ use. Step definitions consume these
  * fixtures instead of talking to selectors directly — the Gherkin layer
  * is just a different way of expressing intent on top of the same
- * reusable framework, not a separate implementation.
+ * reusable helpers, not a separate implementation.
  *
  * ONE BROWSER, ONE LOGIN
  * -----------------------
@@ -31,7 +31,7 @@ import { DashboardPage } from '../../framework/pages/DashboardPage';
  * This only produces a true single continuous session if the scenarios
  * that depend on it run in the same worker, in file order, without being
  * split across parallel workers. That's enforced in
- * playwright.config.bdd.ts (`workers: 1`, `fullyParallel: false`) and by
+ * playwright.config.ts (`workers: 1`, `fullyParallel: false`) and by
  * the `@serial` tag on each Feature (login.feature, search.feature).
  */
 export const test = base.extend<

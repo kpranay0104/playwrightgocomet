@@ -1,6 +1,6 @@
 import { createBdd } from 'playwright-bdd';
 import { test, expect } from './fixtures';
-import { logger } from '../../framework/utils/logger';
+import { logger } from '../helpers/utils/logger';
 
 const { When, Then } = createBdd(test);
 

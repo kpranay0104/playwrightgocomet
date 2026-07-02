@@ -1,7 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from './fixtures';
-import { config } from '../../framework/utils/config';
-import { logger } from '../../framework/utils/logger';
+import { config } from '../helpers/utils/config';
+import { logger } from '../helpers/utils/logger';
 
 const { Given, When, Then } = createBdd(test);
 

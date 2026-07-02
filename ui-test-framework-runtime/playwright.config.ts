@@ -1,31 +1,31 @@
 import { defineConfig, devices } from '@playwright/test';
+import { defineBddConfig } from 'playwright-bdd';
 
-/**
- * Central Playwright configuration.
- * BASE_URL can be overridden via environment variable so the same suite
- * can target different demo apps (OrangeHRM, the-internet, etc.) without
- * code changes.
- */
+const testDir = defineBddConfig({
+  features: 'features/**/*.feature',
+  steps: 'step-definitions/**/*.ts',
+  decorators: {
+    tags: {
+      '@serial': 'test.describe.configure({ mode: "serial" })',
+    },
+  },
+});
+
 const BASE_URL = process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com';
 
 export default defineConfig({
-  testDir: './tests',
-  timeout: 30_000,
-  expect: {
-    timeout: 10_000,
-  },
-  fullyParallel: true,
+  testDir,
+  timeout: 45_000,
+  expect: { timeout: 10_000 },
+  fullyParallel: false,
+  workers: 1,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  retries: 1,
 
-  // Multiple reporters: human-readable list in the console, HTML report for
-  // local/browsable results, and JUnit XML for CI systems (GitHub Actions
-  // test summary, Jenkins, etc.) to consume.
   reporter: [
     ['list'],
-    ['html', { outputFolder: 'playwright-report', open: 'never' }],
-    ['junit', { outputFile: 'test-results/junit-results.xml' }],
+    ['html', { outputFolder: 'playwright-report-bdd', open: 'never' }],
+    ['junit', { outputFile: 'test-results/junit-results-bdd.xml' }],
   ],
 
   use: {
@@ -33,18 +33,11 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    actionTimeout: 10_000,
-    navigationTimeout: 15_000,
+    actionTimeout: 15_000,
+    navigationTimeout: 30_000,
   },
 
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
   ],
 });
