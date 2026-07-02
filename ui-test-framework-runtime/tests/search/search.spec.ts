@@ -10,15 +10,7 @@ import { logger } from '../../framework/utils/logger';
  * closest equivalent to a generic "search" feature on the OrangeHRM demo.
  */
 test.describe('Search workflow', () => {
-  test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.open();
-    await loginPage.login(config.validUser.username, config.validUser.password);
-
-    const dashboardPage = new DashboardPage(page);
-    await dashboardPage.assertLoadedSuccessfully();
-  });
-
+  
   test('searching for the default admin employee returns results @regression', async ({ page }) => {
     const dashboardPage = new DashboardPage(page);
 

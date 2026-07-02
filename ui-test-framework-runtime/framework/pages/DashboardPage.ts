@@ -48,13 +48,7 @@ export class DashboardPage extends BasePage {
     await this.page.waitForTimeout(10000);
   }
 
-  async validateAdminMenuVisible(): Promise<void> {
-    logger.step('Validating Admin menu is visible');
-
-    const adminMenu = this.page.locator('a.oxd-main-menu-item', {
-      hasText: 'Admin',
-    });
-
-    await expect(adminMenu).toBeVisible();
+  async getResultsCount(): Promise<number> {
+    return this.employeeListResults.count();
   }
 }

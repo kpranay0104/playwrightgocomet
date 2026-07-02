@@ -29,7 +29,7 @@ export abstract class BasePage {
     }
   }
 
-  async click(locator: Locator, description: string): Promise<void> {
+  protected async click(locator: Locator, description: string): Promise<void> {
     logger.step(`Clicking: ${description}`);
     try {
       await locator.waitFor({ state: 'visible' });
@@ -40,7 +40,8 @@ export abstract class BasePage {
     }
   }
 
-  async fill(locator: Locator, value: string, description: string): Promise<void> {
+  protected async fill(locator: Locator, value: string, description: string): Promise<void> {
+    // Never log raw values for fields that might be passwords.
     const isSensitive = /password/i.test(description);
     logger.step(`Filling: ${description}`, isSensitive ? '******' : value);
     try {
@@ -52,7 +53,7 @@ export abstract class BasePage {
     }
   }
 
-  async waitForVisible(locator: Locator, description: string, timeout = 10_000): Promise<void> {
+  protected async waitForVisible(locator: Locator, description: string, timeout = 10_000): Promise<void> {
     logger.step(`Waiting for visible: ${description}`);
     try {
       await locator.waitFor({ state: 'visible', timeout });

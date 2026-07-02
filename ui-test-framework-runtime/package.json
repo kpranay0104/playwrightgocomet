@@ -1,0 +1,25 @@
+{
+  "name": "ui-test-automation-framework",
+  "version": "1.0.0",
+  "description": "Reusable UI automation framework (Playwright + TypeScript) for login and search workflow testing, integrated with CI/CD.",
+  "private": true,
+  "scripts": {
+  "test": "playwright test",
+  "test:headed": "playwright test --headed",
+  "test:login": "playwright test tests/login",
+  "test:search": "playwright test tests/search",
+  "test:debug": "playwright test --debug",
+  "report": "playwright show-report",
+  "install:browsers": "playwright install --with-deps chromium",
+  "bdd:gen": "bddgen --config=playwright.config.bdd.ts",
+  "test:bdd": "npm run bdd:gen && playwright test --config=playwright.config.bdd.ts",
+  "test:bdd:headed": "npm run bdd:gen && playwright test --config=playwright.config.bdd.ts --headed",
+  "report:bdd": "playwright show-report playwright-report-bdd"
+},
+"devDependencies": {
+  "@playwright/test": "^1.47.0",
+  "@types/node": "^20.14.0",
+  "playwright-bdd": "^7.4.0",
+  "typescript": "^5.5.0"
+}
+}

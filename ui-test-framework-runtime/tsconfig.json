@@ -15,6 +15,6 @@
       "@tests/*": ["tests/*"]
     }
   },
-  "include": ["framework/**/*.ts", "tests/**/*.ts", "playwright.config.ts"],
+  "include": ["framework/**/*.ts", "tests/**/*.ts", "features/**/*.ts", "playwright.config.ts", "playwright.config.bdd.ts"],
   "exclude": ["node_modules", "playwright-report", "test-results"]
 }
