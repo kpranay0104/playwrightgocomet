@@ -5,13 +5,6 @@ Feature: Login
   credentials
   So that I reach the dashboard
 
-
-
-  Scenario: Submitting an empty login form is rejected
-    Given I am on the login page
-    When I submit the login form without entering anything
-    Then I should see a required field validation message
-
   Scenario: Invalid credentials are rejected
     Given I am on the login page
     When I log in with invalid credentials

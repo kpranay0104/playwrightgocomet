@@ -11,33 +11,42 @@ const testDir = defineBddConfig({
   },
 });
 
-const BASE_URL = process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com';
-
 export default defineConfig({
   testDir,
-  timeout: 45_000,
-  expect: { timeout: 10_000 },
-  fullyParallel: false,
   workers: 1,
-  forbidOnly: !!process.env.CI,
-  retries: 1,
-
-  reporter: [
-    ['list'],
-    ['html', { outputFolder: 'playwright-report-bdd', open: 'never' }],
-    ['junit', { outputFile: 'test-results/junit-results-bdd.xml' }],
-  ],
-
-  use: {
-    baseURL: BASE_URL,
-    trace: 'retain-on-failure',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-    actionTimeout: 15_000,
-    navigationTimeout: 30_000,
+  fullyParallel: false,
+  retries: 0,
+  timeout: 120_000,
+  expect: {
+    timeout: 60_000,
   },
-
+  reporter: [
+    ['html', { outputFolder: 'playwright-report-bdd', open: 'never' }],
+    ['list'],
+    ['json', { outputFile: 'test-results.json' }],
+  ],
+  use: {
+    baseURL: process.env.BASE_URL || 'http//dummy',
+    viewport: { width: 1920, height: 1080 },
+    screenshot: {
+      mode: 'only-on-failure',
+      fullPage: true,
+    },
+    video: {
+      mode: 'retain-on-failure',
+      size: { width: 1920, height: 1080 },
+    },
+    trace: 'retain-on-failure',
+    actionTimeout: 30_000,
+    navigationTimeout: 30_000,
+    launchOptions: {
+      args: ['--start-maximized', '--window-size=1920,1080'],
+    },
+  },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
 });

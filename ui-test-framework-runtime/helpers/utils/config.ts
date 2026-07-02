@@ -9,11 +9,10 @@
  *   2. CI can override them via GitHub Actions secrets without touching code.
  */
 export const config = {
-  baseUrl: process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com',
 
   validUser: {
-    username: process.env.VALID_USERNAME || 'Admin',
-    password: process.env.VALID_PASSWORD || 'admin123',
+    username: process.env.VALID_USERNAME || 'dummy',
+    password: process.env.VALID_PASSWORD || 'dummy',
   },
 
   invalidUser: {
