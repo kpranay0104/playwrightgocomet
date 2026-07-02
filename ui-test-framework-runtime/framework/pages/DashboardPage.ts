@@ -33,13 +33,11 @@ export class DashboardPage extends BasePage {
    * "optional search functionality" scenario. Navigates to PIM first
    * since the search widget lives there, not on the dashboard itself.
    */
-  async searchEmployee(term: string): Promise<void> {
+   async searchEmployee(term: string): Promise<void> {
     await this.page.waitForTimeout(10000);
     logger.info(`Searching for employee: "${term}"`);
 
-    const searchInput = this.page.getByPlaceholder('Search');
-
-    await searchInput.click();
+    const searchInput = this.page.locator("(//*[@class='oxd-input oxd-input--active'])[1]");
     await searchInput.fill(term);
 
     await this.page.keyboard.press('Enter');
@@ -47,6 +45,7 @@ export class DashboardPage extends BasePage {
     await this.page.locator('button:has-text("Search")').click();
     await this.page.waitForTimeout(10000);
   }
+
 
   async getResultsCount(): Promise<number> {
     return this.employeeListResults.count();

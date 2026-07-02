@@ -37,9 +37,7 @@ export class DashboardPage extends BasePage {
     await this.page.waitForTimeout(10000);
     logger.info(`Searching for employee: "${term}"`);
 
-    const searchInput = this.page.getByPlaceholder('Search');
-
-    await searchInput.click();
+    const searchInput = this.page.locator("(//*[@class='oxd-input oxd-input--active'])[1]");
     await searchInput.fill(term);
 
     await this.page.keyboard.press('Enter');
