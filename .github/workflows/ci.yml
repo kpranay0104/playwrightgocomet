@@ -1,3 +1,5 @@
+name: UI Test Automation
+
 on:
   push:
     branches: [main]
@@ -7,12 +9,12 @@ on:
 
 jobs:
   ui-tests:
-    name: Run Playwright UI tests
+    name: Run Playwright BDD UI tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     env:
-      BASE_URL: ${{ vars.BASE_URL || 'https://opensource-demo.orangehrmlive.com' }}
+      BASE_URL: ${{ vars.BASE_URL }}
       VALID_USERNAME: ${{ secrets.VALID_USERNAME }}
       VALID_PASSWORD: ${{ secrets.VALID_PASSWORD }}
       INVALID_USERNAME: ${{ secrets.INVALID_USERNAME }}
@@ -32,32 +34,23 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium firefox
+        run: npx playwright install --with-deps chromium
 
-      - name: Run UI tests
-        run: npx playwright test
+      - name: Run UI tests (generates BDD tests, then runs them)
+        run: npm test
 
       - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
-          path: playwright-report/
+          path: playwright-report-bdd/
           retention-days: 14
 
-      - name: Upload JUnit results
+      - name: Upload JSON test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: junit-results
-          path: test-results/junit-results.xml
+          name: test-results-json
+          path: test-results.json
           retention-days: 14
-
-      - name: Publish test summary
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: Playwright Test Results
-          path: test-results/junit-results.xml
-          reporter: java-junit
-          fail-on-error: false
