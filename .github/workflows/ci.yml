@@ -6,6 +6,27 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Base URL of the app under test'
+        required: false
+        type: string
+      valid_username:
+        description: 'Valid username'
+        required: false
+        type: string
+      valid_password:
+        description: 'Valid password'
+        required: false
+        type: string
+      invalid_username:
+        description: 'Invalid username'
+        required: false
+        type: string
+      invalid_password:
+        description: 'Invalid password'
+        required: false
+        type: string
 
 jobs:
   ui-tests:
@@ -14,13 +35,22 @@ jobs:
     timeout-minutes: 30
 
     env:
-      BASE_URL: ${{ vars.BASE_URL }}
-      VALID_USERNAME: ${{ secrets.VALID_USERNAME }}
-      VALID_PASSWORD: ${{ secrets.VALID_PASSWORD }}
-      INVALID_USERNAME: ${{ secrets.INVALID_USERNAME }}
-      INVALID_PASSWORD: ${{ secrets.INVALID_PASSWORD }}
+      # If this run was manually triggered and you typed a value into the
+      # form, use that. Otherwise (a normal push/PR run, where there's no
+      # form) fall back to the repo secret/variable.
+      BASE_URL: ${{ inputs.base_url || vars.BASE_URL }}
+      VALID_USERNAME: ${{ inputs.valid_username || secrets.VALID_USERNAME }}
+      VALID_PASSWORD: ${{ inputs.valid_password || secrets.VALID_PASSWORD }}
+      INVALID_USERNAME: ${{ inputs.invalid_username || secrets.INVALID_USERNAME }}
+      INVALID_PASSWORD: ${{ inputs.invalid_password || secrets.INVALID_PASSWORD }}
 
     steps:
+      - name: Mask manually entered passwords in logs
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "::add-mask::${{ inputs.valid_password }}"
+          echo "::add-mask::${{ inputs.invalid_password }}"
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
