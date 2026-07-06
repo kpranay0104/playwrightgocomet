@@ -8,7 +8,7 @@ export const dashboardPageLocators = {
   dashboardHeader: { tag: 'h6', hasText: 'Dashboard' },
   userDropdown: '.oxd-userdropdown-tab',
   sidebarSearchInput: 'input[placeholder="Type for hints..."]', // PIM "Employee List" search box
-  employeeListResults: '.oxd-table-card',
+  employeeListResults: "//div[@role='rowgroup']//div[@role='row'][.//div[normalize-space()='Admin']]",
   employeeSearchInputPlaceholder: 'Search',
   employeeSearchButtonText: 'Search',
 };

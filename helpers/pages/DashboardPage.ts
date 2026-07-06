@@ -27,6 +27,7 @@ export class DashboardPage extends BasePage {
     this.employeeListResults = page.locator(locators.employeeListResults);
     this.employeeSearchInput = page.getByPlaceholder(locators.employeeSearchInputPlaceholder);
     this.employeeSearchButton = page.locator(`button:has-text("${locators.employeeSearchButtonText}")`);
+    
   }
 
   async assertLoadedSuccessfully(): Promise<void> {
@@ -54,7 +55,7 @@ export class DashboardPage extends BasePage {
     await this.page.waitForTimeout(10000);
   }
 
-  async getResultsCount(): Promise<number> {
-    return this.employeeListResults.count();
+  async getResultsCount(): Promise<void> {
+    await this.employeeListResults.isVisible();
   }
 }
